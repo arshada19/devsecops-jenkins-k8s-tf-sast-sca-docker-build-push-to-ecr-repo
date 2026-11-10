@@ -1,12 +1,12 @@
 pipeline {
   agent any
   tools { 
-        maven 'Maven_3_5_2'  
+        maven 'Maven_3_8_4'  
     }
    stages{
     stage('CompileandRunSonarAnalysis') {
             steps {	
-		sh 'mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=testoneado -Dsonar.organization=testoneado -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=0716ab3bd8d2d91a743a49cb07f61546fadbfcf3'
+		sh 'mvn clean verify org.sonarsource.scanner.maven:sonar-maven-plugin:sonar -Dsonar.projectKey=arshadabuggywebapp -Dsonar.organization=arshadabuggywebapp -Dsonar.host.url=https://sonarcloud.io -Dsonar.token=008f1a78c3be6f8c33bc5b9a85c8cb0ac14f989b'
 			}
     }
 
@@ -22,7 +22,7 @@ pipeline {
             steps { 
                withDockerRegistry([credentialsId: "dockerlogin", url: ""]) {
                  script{
-                 app =  docker.build("asg")
+                 app =  docker.build("arshada")
                  }
                }
             }
@@ -31,7 +31,7 @@ pipeline {
 	stage('Push') {
             steps {
                 script{
-                    docker.withRegistry('https://429128461530.dkr.ecr.us-east-1.amazonaws.com', 'ecr:us-east-1:aws-credentials') {
+                    docker.withRegistry('https://399439484575.dkr.ecr.us-west-2.amazonaws.com/arshada', 'ecr:us-east-1:aws-credentials') {
                     app.push("latest")
                     }
                 }
